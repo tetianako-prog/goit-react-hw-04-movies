@@ -1,0 +1,52 @@
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0;
+  padding-bottom: 20px;
+}
+
+.movieInfo {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.movieInfo img {
+  display: block;
+}
+
+.backBtn {
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-bottom: 20px;
+  height: 30px;
+  border: none;
+  background-color: rgb(76, 74, 235);
+  color: #fff;
+  cursor: pointer;
+}
+
+.movieInfoText {
+  padding-left: 40px;
+}
+
+.movieInfoText p {
+  line-height: 150%;
+}
+
+.additionalInfo {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+  border-top: 1px solid rgb(201, 191, 191);
+  border-bottom: 1px solid rgb(201, 191, 191);
+}
+
+.nav-link {
+  margin-right: 20px;
+  font-size: 18px;
+  text-decoration: none;
+}
+
+.active {
+  color: red;
+}

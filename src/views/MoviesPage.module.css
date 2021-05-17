@@ -1,0 +1,20 @@
+.Search {
+  width: 264px;
+  margin: 0 auto;
+  margin-bottom: 30px;
+}
+
+.Search input {
+  margin-right: 10px;
+  height: 30px;
+}
+
+.Search button {
+  padding-left: 10px;
+  padding-right: 10px;
+  height: 30px;
+  border: none;
+  background-color: rgb(76, 74, 235);
+  color: #fff;
+  cursor: pointer;
+}

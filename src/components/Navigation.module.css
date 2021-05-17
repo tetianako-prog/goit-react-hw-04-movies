@@ -1,0 +1,17 @@
+.Navigation {
+  list-style: none;
+  display: flex;
+  font-size: 24px;
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 20px;
+  padding-left: 200px;
+}
+
+.nav-link {
+  margin-right: 20px;
+  text-decoration: none;
+}
+
+.active {
+  color: red;
+}
