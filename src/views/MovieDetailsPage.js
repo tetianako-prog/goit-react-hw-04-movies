@@ -6,7 +6,7 @@ import Reviews from '../components/Reviews';
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import Loader from "react-loader-spinner";
 import styles from './MovieDetailsPage.module.css';
-//  https://image.tmdb.org/t/p/w300
+
 export class MovieDetailsPage extends Component {
   state = {
     title: null,
@@ -33,8 +33,7 @@ export class MovieDetailsPage extends Component {
       isLoading: false
     });
   }
-
-  
+ 
   handleGoBack = () => {
     const { location, history } = this.props;
 
@@ -44,7 +43,6 @@ export class MovieDetailsPage extends Component {
 
     history.push('/');
   }
-
 
   render() {
     const { title, imgUrl, rating, genres, overview, year, isLoading } = this.state;
@@ -59,7 +57,7 @@ export class MovieDetailsPage extends Component {
           color="#00BFFF"
           height={100}
           width={100}
-          timeout={3000} //3 secs
+          timeout={3000} 
         /> :
           <div>
             <button className={styles.backBtn } type="button" onClick={this.handleGoBack}>

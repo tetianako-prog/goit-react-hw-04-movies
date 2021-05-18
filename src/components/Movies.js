@@ -1,15 +1,21 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import styles from './Movies.module.css';
 import errImg from '../images/error.jpg';
 
-const Movies = ({ movies }) => {
+const Movies = ({ movies, location }) => {
   return (
     <ul className={styles.container}>
       {movies.map(movie => {
         return (
           <li className={styles.item} key={movie.id}>
-            <Link to={`/movies/${movie.id}`} className={styles.link}>
+            <Link
+              to={{
+                pathname: `/movies/${movie.id}`,
+                state: { from: location },
+              }}
+              className={styles.link}
+            >
               <img
                 src={
                   movie.poster_path
@@ -29,4 +35,4 @@ const Movies = ({ movies }) => {
   );
 };
 
-export default Movies;
+export default withRouter(Movies);
