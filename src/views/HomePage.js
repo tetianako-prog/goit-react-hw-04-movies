@@ -9,7 +9,6 @@ class HomePage extends Component {
   }
   async componentDidMount() {
     const response = await moviesApi.getTrending();
-
     this.setState({ movies: response });
     const query = localStorage.getItem('query');
     query && localStorage.removeItem('query');

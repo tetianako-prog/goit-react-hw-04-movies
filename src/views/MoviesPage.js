@@ -7,13 +7,23 @@ class MoviesPage extends Component {
   state = {
     inputValue: '',
     movies: [],
+    query: '',
   };
 
-  async componentWillMount() {
+  async componentDidMount() {
     const query = localStorage.getItem('query');
     if (query) {
+      this.setState({ query });
       const response = await moviesApi.getMovieByQuery(query);
       this.setState({ movies: response });
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.movies !== this.state.movies) {
+      const { history } = this.props;
+      history.push(`/movies?query=${this.state.query}`);
+      localStorage.setItem('query', this.state.query);
     }
   }
 
@@ -24,8 +34,8 @@ class MoviesPage extends Component {
   onFormSubmit = e => {
     e.preventDefault();
     moviesApi.getMovieByQuery(this.state.inputValue).then(res => {
-      localStorage.setItem('query', this.state.inputValue);
-      this.setState({ inputValue: '', movies: res });
+      const query = this.state.inputValue;
+      this.setState({ inputValue: '', movies: res, query });
     });
   };
 
