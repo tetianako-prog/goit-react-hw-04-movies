@@ -7,12 +7,8 @@ class HomePage extends Component {
   state = {
     movies: []
   }
-  async componentDidMount() {
-    const response = await moviesApi.getTrending();
-    this.setState({ movies: response });
-    const query = localStorage.getItem('query');
-    query && localStorage.removeItem('query');
-    
+  componentDidMount() {
+    moviesApi.getTrending().then(res => this.setState({ movies: res })).catch(err => console.log(err));   
   }
 
   render() {
