@@ -15,10 +15,14 @@ export class MovieDetailsPage extends Component {
     genres: null,
     overview: null,
     year: null,
-    isLoading: false
+    isLoading: false,
+    from: null
   };
 
   async componentDidMount() {
+    if (this.props.location?.state?.from) {
+      this.setState({from: this.props.location.state.from})
+    }
     const { movieId } = this.props.match.params;
     this.setState({isLoading: true})
     const response = await movieApi.getDetails(movieId);
@@ -35,10 +39,10 @@ export class MovieDetailsPage extends Component {
   }
  
   handleGoBack = () => {
-    const { location, history } = this.props;
+    const { history } = this.props;
 
-      if (location.state && location.state.from) {
-          return history.push(location.state.from);
+    if (this.state.from) {
+      return history.push(this.state.from);
     }
 
     history.push('/');

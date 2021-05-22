@@ -8,6 +8,7 @@ class MoviesPage extends Component {
   state = {
     inputValue: '',
     movies: [],
+    isSearch: false,
   };
 
   componentDidMount() {
@@ -15,8 +16,16 @@ class MoviesPage extends Component {
     if (queryParams.category) {
       moviesApi
         .getMovieByQuery(queryParams.category)
-        .then(res => this.setState({ movies: res }))
+        .then(res => this.setState({ movies: res, isSearch: true }))
         .catch(err => console.log(err));
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.location.search !== this.props.location.search) {
+      if (!this.props.location.search) {
+        this.setState({ isSearch: false });
+      }
     }
   }
 
@@ -30,12 +39,13 @@ class MoviesPage extends Component {
       .getMovieByQuery(this.state.inputValue)
       .then(res => {
         const query = this.state.inputValue;
+        this.setState({ query });
         const { history } = this.props;
         history.push({
           pathname: this.props.location.pathname,
           search: `category=${query}`,
         });
-        this.setState({ inputValue: '', movies: res });
+        this.setState({ inputValue: '', movies: res, isSearch: true });
       })
       .catch(err => console.log(err));
   };
@@ -52,7 +62,7 @@ class MoviesPage extends Component {
           />
           <button type="sumbit">Search</button>
         </form>
-        <Movies movies={movies} />
+        {this.state.isSearch && <Movies movies={movies} />}
       </>
     );
   }
