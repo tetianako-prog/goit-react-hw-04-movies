@@ -1,26 +1,29 @@
 import React, { Component } from 'react';
-import moviesApi from '../movies-api/movies-api';
+import moviesApi from '../../movies-api/movies-api';
 
 export class Reviews extends Component {
   state = { reviews: [] };
 
   async componentDidMount() {
-    const response = await moviesApi.getReviews(
-      this.props.match.params.movieId,
-    );
-
-    this.setState({ reviews: response });
+    try {
+      const { movieId } = this.props.match.params;
+      const response = await moviesApi.getReviews(movieId);
+      this.setState({ reviews: response });
+    } catch (err) {
+      console.log(err);
+    }
   }
+
   render() {
     const { reviews } = this.state;
     return (
       <div>
         {reviews.length > 0 ? (
           <ul>
-            {this.state.reviews.map(item => (
-              <li key={item.id}>
-                <h3>{item.author}</h3>
-                <p>{item.content}</p>
+            {reviews.map(({ id, author, content }) => (
+              <li key={id}>
+                <h3>{author}</h3>
+                <p>{content}</p>
               </li>
             ))}
           </ul>

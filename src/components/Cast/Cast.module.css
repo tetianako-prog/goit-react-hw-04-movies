@@ -6,7 +6,7 @@
 }
 
 .item::before {
-  content: url(../images/checkmark.png);
+  content: url(../../images/checkmark.png);
   position: absolute;
   bottom: 0;
   left: -10px;

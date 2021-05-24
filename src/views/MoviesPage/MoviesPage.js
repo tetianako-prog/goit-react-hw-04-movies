@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import moviesApi from '../movies-api/movies-api';
+import moviesApi from '../../movies-api/movies-api';
 import queryString from 'query-string';
-import Movies from '../components/Movies';
+import Movies from '../../components/Movies';
 import styles from './MoviesPage.module.css';
 
 class MoviesPage extends Component {
@@ -12,7 +12,8 @@ class MoviesPage extends Component {
   };
 
   componentDidMount() {
-    const queryParams = queryString.parse(this.props.location.search);
+    const { search } = this.props.location;
+    const queryParams = queryString.parse(search);
     if (queryParams.category) {
       moviesApi
         .getMovieByQuery(queryParams.category)
@@ -22,27 +23,30 @@ class MoviesPage extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevProps.location.search !== this.props.location.search) {
-      if (!this.props.location.search) {
+    const { search } = this.props.location;
+    if (prevProps.location.search !== search) {
+      if (!search) {
         this.setState({ isSearch: false });
       }
     }
   }
 
   onHandleChange = e => {
-    this.setState({ inputValue: e.target.value });
+    const { value } = e.target;
+    this.setState({ inputValue: value });
   };
 
   onFormSubmit = e => {
     e.preventDefault();
+    const { inputValue } = this.state;
     moviesApi
-      .getMovieByQuery(this.state.inputValue)
+      .getMovieByQuery(inputValue)
       .then(res => {
-        const query = this.state.inputValue;
+        const query = inputValue;
         this.setState({ query });
-        const { history } = this.props;
+        const { history, location } = this.props;
         history.push({
-          pathname: this.props.location.pathname,
+          pathname: location.pathname,
           search: `category=${query}`,
         });
         this.setState({ inputValue: '', movies: res, isSearch: true });
@@ -51,18 +55,18 @@ class MoviesPage extends Component {
   };
 
   render() {
-    const { movies } = this.state;
+    const { movies, inputValue, isSearch } = this.state;
     return (
       <>
         <form className={styles.Search} onSubmit={this.onFormSubmit}>
           <input
             type="text"
             onChange={this.onHandleChange}
-            value={this.state.inputValue}
+            value={inputValue}
           />
           <button type="sumbit">Search</button>
         </form>
-        {this.state.isSearch && <Movies movies={movies} />}
+        {isSearch && <Movies movies={movies} />}
       </>
     );
   }
